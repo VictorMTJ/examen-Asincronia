@@ -1,11 +1,11 @@
-import {getUsuarios,getPost,getCommets, getAlbums, getFotos} from "../modulos/index";
+import {getUsuarios,getPost,getCommets,getAlbums,getFotos} from "../modulos/index.js";
 const URL = "https://jsonplaceholder.typicode.com";
 const usuarioId=3;
 
 const getusuarioId= async (usuarioId)=>{
     let usuario= await getUsuarios(URL,usuarioId);
     let post =await getPost(URL,usuario[0]);
-    let album = await getAlbum(URL,usuario[0])
+    let album = await getAlbums(URL,usuario[0])
 }
 
 getusuarioId(usuarioId);
@@ -23,9 +23,9 @@ const manejardatos = async () => {
         const albums = await getAlbums(URL,usuario);
         const fotosAlbum = await Promise.all(albums.map(async(album)=>{
             const fotos = await getFotos(URL,album);
-            return {...album,fotos}
+            return {...album,fotos};
         }));
-        return {...usuario,comentPost};
+        return {...usuario,fotosAlbum,comentPost};
     }));
 };
 manejardatos().then((data)=>{
